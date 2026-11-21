@@ -1,6 +1,15 @@
 // Scroll reveal
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%4)*0.12+'s';io.observe(el)});
+// Organization chart image controls
+const orgImage=document.getElementById('org-image');
+if(orgImage){
+let zoom=1;
+const zoomLevel=document.getElementById('zoom-level');
+const updateZoom=()=>{orgImage.style.transform=`scale(${zoom})`;zoomLevel.value=`${Math.round(zoom*100)}%`};
+document.getElementById('zoom-in').addEventListener('click',()=>{zoom=Math.min(zoom+0.25,2.5);updateZoom()});
+document.getElementById('zoom-out').addEventListener('click',()=>{zoom=Math.max(zoom-0.25,0.5);updateZoom()});
+}
 // Menu mobile & progress bar
 document.getElementById('menu').onclick=()=>document.getElementById('nav').classList.toggle('open');
 addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('progress').style.width=h.scrollTop/(h.scrollHeight-h.clientHeight)*100+'%'});
